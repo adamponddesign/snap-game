@@ -1,0 +1,76 @@
+* {
+  box-sizing: border-box;
+}
+
+h1 {
+  text-align: center;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.scoreboard {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+
+
+
+// grid classes ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.easy-grid {
+  display: flex;
+  flex-wrap: wrap;
+  width: 650px;
+  height: 650px;
+}
+.easy-square {
+  background: green;
+  width: 25%;
+  height: 25%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0.5px solid grey;
+  border-collapse: collapse;
+}
+ //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.medium-grid {
+  display: flex;
+  flex-wrap: wrap;
+  width: 650px;
+  height: 650px;
+}
+.medium-square {
+  background: yellow;
+  width: calc(100% / 6);
+  height: calc(100% / 6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0.5px solid grey;
+  border-collapse: collapse;
+}
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.hard-grid {
+  display: flex;
+  flex-wrap: wrap;
+  width: 650px;
+  height: 650px;
+}
+.hard-square {
+  background: red;
+  width: 10%;
+  height: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0.5px solid grey;
+  border-collapse: collapse;
+}
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

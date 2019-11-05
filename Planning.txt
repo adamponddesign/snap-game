@@ -1,0 +1,29 @@
+Pairs Game
+
+
+Difficulty level
+- select the amount of cards that are in play
+- limit the amount of moves the player is allowed to make before they complete the Game
+- time limit to complete game
+- card reveal timing (shorter time is harder)
+
+
+On screen
+
+display level - 1 to 10
+display move counter - the less moves the higher the score
+
+
+Game grid
+box of squares that when clicked reveal a symbol for a short amount of time then flip back over
+when two matching cards are flipped one after another, this is a pair... those cards are greyed out and stay flipped over.
+
+(game within a game, each mini game has two moves only... this will stop move 2 from previous game and move 1 from new game being a match)
+
+
+
+
+logic
+level 1
+10 squares (5 pairs of symbols)
+randomly place the individual symbols across the 10 squares
