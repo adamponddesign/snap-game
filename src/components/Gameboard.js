@@ -29,14 +29,22 @@ const Gameboard = props => {
 
 
 
+  console.log(props)
+
   return (
     <div className='container'>
       <div className={gridClasses}>
-        {props.squares.map((square) => {
-          return <div key={square} className={squareClasses}>{square}</div>
-        })}
+        {props.squares.map((square, index) => {
 
+
+          return <div key={index} className={squareClasses}>
+            <img src={square} />
+
+          </div>
+
+        })}
       </div>
+
     </div>
   )
 }
