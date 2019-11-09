@@ -28,11 +28,39 @@ import emoji18 from './assets/iconfinder_japan_monkey_japanese_onsen_hot_spring_
 class App extends React.Component {
 
   state = {
-    level: 2,
+    level: 1,
     moves: 0,
+    active: false,
     squares: [],
-    iconsLevel1: [emoji1, emoji2, emoji3, emoji4, emoji5, emoji6, emoji7, emoji8],
-    iconsLevel2: [emoji1, emoji2, emoji3, emoji4, emoji5, emoji6, emoji7, emoji8, emoji9, emoji10, emoji11, emoji12, emoji13, emoji14, emoji15, emoji16, emoji17, emoji18]
+    iconsLevel1: [
+      {name: 'monical', image: emoji1},
+      {name: 'loveeyes', image: emoji2},
+      {name: '80ssunglasses', image: emoji3},
+      {name: 'readingglasses', image: emoji4},
+      {name: 'pinkhorns', image: emoji5},
+      {name: 'stareyes', image: emoji6},
+      {name: 'openmouth', image: emoji7},
+      {name: 'coverseyes', image: emoji8}
+    ],
+    iconsLevel2: [
+      {name: 'monical', image: emoji1},
+      {name: 'loveeyes', image: emoji2},
+      {name: '80ssunglasses', image: emoji3},
+      {name: 'readingglasses', image: emoji4},
+      {name: 'pinkhorns', image: emoji5},
+      {name: 'stareyes', image: emoji6},
+      {name: 'openmouth', image: emoji7},
+      {name: 'coverseyes', image: emoji8},
+      {name: 'rose', image: emoji9},
+      {name: 'ninja', image: emoji10},
+      {name: 'redangry', image: emoji11},
+      {name: 'baby', image: emoji12},
+      {name: 'heart', image: emoji13},
+      {name: 'cat', image: emoji14},
+      {name: 'pinkkisses', image: emoji15},
+      {name: 'bonsai', image: emoji16},
+      {name: 'sumo', image: emoji17},
+      {name: 'monkey', image: emoji18}]
   }
 
 
@@ -132,8 +160,35 @@ class App extends React.Component {
   }
 
 
+  boardClickHandler = e => {
+
+    this.setState(prevState => ({
+      moves: prevState.moves +1
+    }))
+
+    console.log('square clicked', e.target)
 
 
+    let count = 4
+
+    // start an interval that decrements the count by 1 every seconds
+
+    const timerId = setInterval(() => {
+      this.setState({ active: true })
+      console.log(count)
+      count --
+
+      //if the count reaches 0, clear the interval
+
+      if(count === 0) {
+        clearInterval(timerId)
+        this.setState({ active: false })
+      }
+
+
+    }, 1000)
+
+  }
 
 
 
@@ -149,7 +204,7 @@ class App extends React.Component {
 
 
         <Scoreboard level={this.state.level} moves={this.state.moves} />
-        <Gameboard level={this.state.level} squares={this.state.squares}/>
+        <Gameboard level={this.state.level} squares={this.state.squares} clickHandler={this.boardClickHandler} active={this.state.active}/>
       </main>
     )
   }
