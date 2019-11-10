@@ -30,7 +30,8 @@ class App extends React.Component {
   state = {
     level: 1,
     moves: 0,
-    active: false,
+    activeSquare: [],
+    pairArray: [],
     squares: [],
     iconsLevel1: [
       {name: 'monical', image: emoji1},
@@ -160,33 +161,65 @@ class App extends React.Component {
   }
 
 
+  componentDidUpdate = () => {
+    const pairArray = this.state.pairArray
+
+
+    if (pairArray.length === 2) {
+
+
+
+
+      if (pairArray[0] === pairArray[1]) {
+        console.log('PAIR!!')
+      } else {
+        console.log('no pair')
+      }
+    }
+
+  }
+
   boardClickHandler = e => {
 
+
+    const id = e.target.id
+
+    const name = e.target.getAttribute('name')
+
+    // reset pairArray if more than 2 items in the array
+    if (this.state.pairArray.length+1 > 2) {
+      this.setState(
+        { pairArray: [],
+          activeSquare: []
+        }
+      )
+    }
+
+
+    // send the id of the square clicked to state
     this.setState(prevState => ({
-      moves: prevState.moves +1
+      moves: prevState.moves +1,
+      activeSquare: [ ...prevState.activeSquare, id],
+      pairArray: [ ...prevState.pairArray, name]
+
     }))
 
-    console.log('square clicked', e.target)
+
+    // // amount of time the icon will be visible
+    // let count = 3
+    // // start an interval that decrements the count by 1 every seconds
+    // const timerId = setInterval(() => {
+    //   this.setState({ activeSquare: id })
+    //   count --
+    //
+    //   //if the count reaches 0, clear/stop the interval
+    //   if(count === 0) {
+    //     clearInterval(timerId)
+    //     this.setState({ activeSquare: null })
+    //   }
+    // }, 1000)
 
 
-    let count = 4
-
-    // start an interval that decrements the count by 1 every seconds
-
-    const timerId = setInterval(() => {
-      this.setState({ active: true })
-      console.log(count)
-      count --
-
-      //if the count reaches 0, clear the interval
-
-      if(count === 0) {
-        clearInterval(timerId)
-        this.setState({ active: false })
-      }
-
-
-    }, 1000)
 
   }
 
@@ -195,16 +228,27 @@ class App extends React.Component {
 
 
 
-  render() {
 
+
+
+
+  render() {
+    console.log('log in render', this.state.activeSquare)
     return (
       <main>
 
         <h1>Anything for a Pair</h1>
 
 
-        <Scoreboard level={this.state.level} moves={this.state.moves} />
-        <Gameboard level={this.state.level} squares={this.state.squares} clickHandler={this.boardClickHandler} active={this.state.active}/>
+        <Scoreboard
+          level={this.state.level}
+          moves={this.state.moves} />
+        <Gameboard
+          level={this.state.level}
+          squares={this.state.squares}
+          clickHandler={this.boardClickHandler}
+          activeSquare={this.state.activeSquare}
+        />
       </main>
     )
   }

@@ -27,27 +27,27 @@ const Gameboard = props => {
   }
 
 
-  // let iconvisibility = 'hidden'
-  //
-  // if (props.showImage) {
-  //   iconvisibility = 'shown'
-  // }
 
 
-  console.log(props)
+
 
   return (
     <div className='container'>
       <div className={gridClasses}>
         {props.squares.map((square, index) => {
 
+          // console.log('log in map Gameboard', props.activeSquare, index.toString())
 
-          return <div key={index} onClick={props.clickHandler} className={squareClasses} >
-            <div  name={square.name}>
+          return <div id={index} key={index} name={square.name} onClick={props.clickHandler} className={squareClasses} >
 
-              {props.active &&  <img name={square.name} src={square.image} />}
 
-            </div>
+            <img
+              id={index}
+              name={square.name}
+              src={square.image}
+              className={`${props.activeSquare[0] === index.toString() || props.activeSquare[1] === index.toString() ? '' : 'hidden'}`} />
+
+
           </div>
 
         })}
