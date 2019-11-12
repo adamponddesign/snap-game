@@ -33,6 +33,8 @@ class App extends React.Component {
     activeSquare: [],
     pairArray: [],
     squares: [],
+    match: null,
+    matchArray: [],
     iconsLevel1: [
       {name: 'monical', image: emoji1},
       {name: 'loveeyes', image: emoji2},
@@ -109,8 +111,8 @@ class App extends React.Component {
     const squaresTemp = this.state.squares
     // check if the selected icon is already in the squares array 2 times or more
     let dupCount = 0
-    for(var s = 0; s < squaresTemp.length; ++s){
-      if(squaresTemp[s] === selectedIcon ) {
+    for(var i = 0; i < squaresTemp.length; ++i){
+      if(squaresTemp[i] === selectedIcon ) {
         dupCount++
       }
     }
@@ -161,26 +163,46 @@ class App extends React.Component {
   }
 
 
-  componentDidUpdate = () => {
+  // componentDidUpdate = () => {
+  //   console.log('componentDidUpdate', this.state)
+  //
+  //
+  //
+  // }
+
+
+  checkForWin = () => {
     const pairArray = this.state.pairArray
 
 
     if (pairArray.length === 2) {
-
+      console.log('checkForWin')
 
 
 
       if (pairArray[0] === pairArray[1]) {
-        console.log('PAIR!!')
+        console.log('MATCH!!')
+
+        this.setState(prevState => ({
+          match: true,
+          matchArray: [ ...prevState.matchArray,  pairArray[0] ]
+
+        }))
       } else {
-        console.log('no pair')
+        console.log('NO MATCH!!')
+        this.setState({ match: false })
       }
     }
 
+
+
+
   }
+
 
   boardClickHandler = e => {
 
+    // this.setState({ match: null }, console.log('boardClickHandler()', this.state.match))
 
     const id = e.target.id
 
@@ -190,7 +212,8 @@ class App extends React.Component {
     if (this.state.pairArray.length+1 > 2) {
       this.setState(
         { pairArray: [],
-          activeSquare: []
+          activeSquare: [],
+          match: null
         }
       )
     }
@@ -202,7 +225,9 @@ class App extends React.Component {
       activeSquare: [ ...prevState.activeSquare, id],
       pairArray: [ ...prevState.pairArray, name]
 
-    }))
+    }), this.checkForWin)
+
+    // this.setState({ match: null }, console.log('boardClickHandler()', this.state.match))
 
 
     // // amount of time the icon will be visible
@@ -221,6 +246,8 @@ class App extends React.Component {
 
 
 
+
+
   }
 
 
@@ -233,7 +260,7 @@ class App extends React.Component {
 
 
   render() {
-    console.log('log in render', this.state.activeSquare)
+    console.log('app.js rendered', this.state.activeSquare)
     return (
       <main>
 
@@ -248,6 +275,8 @@ class App extends React.Component {
           squares={this.state.squares}
           clickHandler={this.boardClickHandler}
           activeSquare={this.state.activeSquare}
+          match={this.state.match}
+          matchArray={this.state.matchArray}
         />
       </main>
     )

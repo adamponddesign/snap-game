@@ -4,7 +4,7 @@ import React from 'react'
 const Gameboard = props => {
 
 
-
+  // sets the layout and color or the squares depending on the game level in state
   let squareClasses = ''
   let gridClasses = ''
 
@@ -27,16 +27,37 @@ const Gameboard = props => {
   }
 
 
+  // sets the background of the gameboard container to red or green depending on whether there's a match or not
+  let containerClasses = 'container'
+  if (props.match === null) {
+    containerClasses = 'container'
+  } else if (props.match) {
+    containerClasses = 'container green'
+  } else {
+    containerClasses = 'container red'
+  }
+
+  // sets the visibility of the iconsLevel
+  // let winClasses = 'hidden'
+  // if (props.activeSquare[0] === index.toString() || props.activeSquare[1] === index.toString())
+
+  /*
+
+  if square name is equal to any of the names in the match array then set visibility to 'view'
 
 
+  */
+  const matchArray = props.matchArray
 
+
+  console.log('Gameboard rendered', props.matchArray)
 
   return (
-    <div className='container'>
+    <div className={containerClasses}>
       <div className={gridClasses}>
         {props.squares.map((square, index) => {
 
-          // console.log('log in map Gameboard', props.activeSquare, index.toString())
+
 
           return <div id={index} key={index} name={square.name} onClick={props.clickHandler} className={squareClasses} >
 
@@ -45,7 +66,10 @@ const Gameboard = props => {
               id={index}
               name={square.name}
               src={square.image}
-              className={`${props.activeSquare[0] === index.toString() || props.activeSquare[1] === index.toString() ? '' : 'hidden'}`} />
+              className={
+                `${props.activeSquare[0] === index.toString() || props.activeSquare[1] === index.toString() ? '' : 'hidden'}
+                ${matchArray.includes(square.name) ? 'shown' : ''}`}
+            />
 
 
           </div>
