@@ -28,7 +28,8 @@ import emoji18 from './assets/iconfinder_japan_monkey_japanese_onsen_hot_spring_
 class App extends React.Component {
 
   state = {
-    level: 1,
+    timer: 0,
+    level: 2,
     moves: 0,
     activeSquare: [],
     pairArray: [],
@@ -69,10 +70,24 @@ class App extends React.Component {
 
   componentDidMount = () => {
     this.buildGame()
+    // amount of time the icon will be visible
+    let count = 1
+    // start an interval that decrements the count by 1 every seconds
+    const timerId = setInterval(() => {
+      this.setState({ timer: count  })
+      count ++
+
+
+      if(this.state.matchArray.length === this.state.squares.length/2) {
+        clearInterval(timerId)
+
+      }
+    }, 1000)
   }
 
   // adds the correct amount of squares to the squares array based on the difficulty level number
   buildGame = () => {
+    console.log('buildgame function called')
     switch (this.state.level) {
       case 1:{
         let count = 1
@@ -90,18 +105,48 @@ class App extends React.Component {
         }
         break
       }
-      case 3:{
-        let count = 1
-        while (count <= 100) {
-          this.state.squares.push(count)
-          count += 1
-        }
-        break
-      }
     }
+
+    // amount of time the icon will be visible
+    let count = 1
+    // start an interval that decrements the count by 1 every seconds
+    const timerId = setInterval(() => {
+      this.setState({ timer: count  })
+      count ++
+
+
+      if(this.state.matchArray.length === this.state.squares.length/2) {
+        clearInterval(timerId)
+        this.setState({ timer: count  })
+      }
+    }, 1000)
   }
 
+  gameReset = () => {
+    this.setState({
+      timer: 0,
+      level: 1,
+      moves: 0,
+      activeSquare: [],
+      pairArray: [],
+      squares: [],
+      match: null,
+      matchArray: []
+    }, this.buildGame )
+  }
 
+  gameReset2 = () => {
+    this.setState({
+      timer: 0,
+      level: 2,
+      moves: 0,
+      activeSquare: [],
+      pairArray: [],
+      squares: [],
+      match: null,
+      matchArray: []
+    }, this.buildGame )
+  }
 
   pickRandomIconLevel1 = () => {
     const randomNum = Math.floor(Math.random() * 8)
@@ -127,16 +172,6 @@ class App extends React.Component {
     }
   }
 
-
-
-
-
-
-
-
-
-
-
   pickRandomIconLevel2 = () => {
     const randomNum = Math.floor(Math.random() * 18)
     // use that number to reference the icons array on state and select a random icon
@@ -145,8 +180,8 @@ class App extends React.Component {
     const squaresTemp = this.state.squares
     // check if the selected icon is already in the squares array 2 times or more
     let dupCount = 0
-    for(var s = 0; s < squaresTemp.length; ++s){
-      if(squaresTemp[s] === selectedIcon ) {
+    for(var i = 0; i < squaresTemp.length; ++i){
+      if(squaresTemp[i] === selectedIcon ) {
         dupCount++
       }
     }
@@ -162,50 +197,28 @@ class App extends React.Component {
     }
   }
 
-
-  // componentDidUpdate = () => {
-  //   console.log('componentDidUpdate', this.state)
-  //
-  //
-  //
-  // }
-
-
-  checkForWin = () => {
+  checkForPair = () => {
     const pairArray = this.state.pairArray
-
-
+    // if pairArray length is 2
     if (pairArray.length === 2) {
-      console.log('checkForWin')
-
-
-
+      // check if both items in the array are the same
       if (pairArray[0] === pairArray[1]) {
-        console.log('MATCH!!')
-
+        // if they are change match: to true, and add the name of the icon to the matchArray
         this.setState(prevState => ({
           match: true,
           matchArray: [ ...prevState.matchArray,  pairArray[0] ]
-
         }))
       } else {
-        console.log('NO MATCH!!')
+        // if not set match: to false
         this.setState({ match: false })
       }
     }
-
-
-
-
   }
 
 
+
   boardClickHandler = e => {
-
-    // this.setState({ match: null }, console.log('boardClickHandler()', this.state.match))
-
     const id = e.target.id
-
     const name = e.target.getAttribute('name')
 
     // reset pairArray if more than 2 items in the array
@@ -220,56 +233,53 @@ class App extends React.Component {
 
 
     // send the id of the square clicked to state
+    // check of pair
     this.setState(prevState => ({
       moves: prevState.moves +1,
       activeSquare: [ ...prevState.activeSquare, id],
       pairArray: [ ...prevState.pairArray, name]
 
-    }), this.checkForWin)
-
-    // this.setState({ match: null }, console.log('boardClickHandler()', this.state.match))
-
-
-    // // amount of time the icon will be visible
-    // let count = 3
-    // // start an interval that decrements the count by 1 every seconds
-    // const timerId = setInterval(() => {
-    //   this.setState({ activeSquare: id })
-    //   count --
-    //
-    //   //if the count reaches 0, clear/stop the interval
-    //   if(count === 0) {
-    //     clearInterval(timerId)
-    //     this.setState({ activeSquare: null })
-    //   }
-    // }, 1000)
-
-
-
-
+    }), this.checkForPair)
 
   }
 
 
-
-
-
-
-
-
-
-
   render() {
     console.log('app.js rendered', this.state.activeSquare)
+    if (this.state.matchArray.length === this.state.squares.length/2) {
+
+      return (
+        <main>
+
+          <div className='title'>YOU WIN</div>
+          <div className='center'>Result</div>
+
+          <div className='winscreen'>
+            <p>Level: {this.state.level}</p>
+            <p>Moves: {this.state.moves}</p>
+            <p>Time: {this.state.timer}</p>
+          </div>
+
+          <div className='center'>Play Again?</div>
+
+          <div className='center winscreen'>
+            <button className='btn' onClick={this.gameReset}>Level 1</button>
+            <button className='btn' onClick={this.gameReset2}>Level 2</button>
+          </div>
+        </main>
+      )
+    }
+
     return (
       <main>
 
-        <h1>Anything for a Pair</h1>
 
 
         <Scoreboard
           level={this.state.level}
-          moves={this.state.moves} />
+          moves={this.state.moves}
+          timer={this.state.timer}
+        />
         <Gameboard
           level={this.state.level}
           squares={this.state.squares}

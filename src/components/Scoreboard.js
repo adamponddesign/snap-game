@@ -7,6 +7,7 @@ const Scoreboard = props => {
 
       <h2>Level {props.level}</h2>
       <h2>Moves {props.moves}</h2>
+      <h2>Time {props.timer}</h2>
     </div>
   )
 }
