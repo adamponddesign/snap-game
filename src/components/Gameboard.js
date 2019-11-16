@@ -3,7 +3,6 @@ import React from 'react'
 
 const Gameboard = props => {
 
-
   // sets the layout and color or the squares depending on the game level in state
   let squareClasses = ''
   let gridClasses = ''
@@ -37,31 +36,13 @@ const Gameboard = props => {
     containerClasses = 'container red'
   }
 
-  // sets the visibility of the iconsLevel
-  // let winClasses = 'hidden'
-  // if (props.activeSquare[0] === index.toString() || props.activeSquare[1] === index.toString())
-
-  /*
-
-  if square name is equal to any of the names in the match array then set visibility to 'view'
-
-
-  */
   const matchArray = props.matchArray
-
-
-  console.log('Gameboard rendered', props.matchArray)
 
   return (
     <div className={containerClasses}>
       <div className={gridClasses}>
         {props.squares.map((square, index) => {
-
-
-
           return <div id={index} key={index} name={square.name} onClick={props.clickHandler} className={squareClasses} >
-
-
             <img
               id={index}
               name={square.name}
@@ -70,10 +51,7 @@ const Gameboard = props => {
                 `${props.activeSquare[0] === index.toString() || props.activeSquare[1] === index.toString() ? '' : 'hidden'}
                 ${matchArray.includes(square.name) ? 'shown' : ''}`}
             />
-
-
           </div>
-
         })}
       </div>
 

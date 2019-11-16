@@ -22,14 +22,11 @@ import emoji16 from './assets/iconfinder_garden_bonsai_gardening_tree_growth_jap
 import emoji17 from './assets/iconfinder_japan_culture_traditional_sumo_japanese_sport_5296659.png'
 import emoji18 from './assets/iconfinder_japan_monkey_japanese_onsen_hot_spring_5296664.png'
 
-
-
-
 class App extends React.Component {
 
   state = {
     timer: 0,
-    level: 2,
+    level: 1,
     moves: 0,
     activeSquare: [],
     pairArray: [],
@@ -66,7 +63,6 @@ class App extends React.Component {
       {name: 'sumo', image: emoji17},
       {name: 'monkey', image: emoji18}]
   }
-
 
   componentDidMount = () => {
     this.buildGame()
@@ -215,8 +211,6 @@ class App extends React.Component {
     }
   }
 
-
-
   boardClickHandler = e => {
     const id = e.target.id
     const name = e.target.getAttribute('name')
@@ -245,14 +239,12 @@ class App extends React.Component {
 
 
   render() {
-    console.log('app.js rendered', this.state.activeSquare)
     if (this.state.matchArray.length === this.state.squares.length/2) {
-
       return (
         <main>
 
           <div className='title'>YOU WIN</div>
-          <div className='center'>Result</div>
+          <div className='center result'>Result</div>
 
           <div className='winscreen'>
             <p>Level: {this.state.level}</p>
@@ -264,7 +256,7 @@ class App extends React.Component {
 
           <div className='center winscreen'>
             <button className='btn' onClick={this.gameReset}>Level 1</button>
-            <button className='btn' onClick={this.gameReset2}>Level 2</button>
+            <button className='btn orange' onClick={this.gameReset2}>Level 2</button>
           </div>
         </main>
       )
@@ -272,9 +264,6 @@ class App extends React.Component {
 
     return (
       <main>
-
-
-
         <Scoreboard
           level={this.state.level}
           moves={this.state.moves}
@@ -292,6 +281,7 @@ class App extends React.Component {
     )
   }
 }
+
 
 ReactDOM.render(
   <App />,
